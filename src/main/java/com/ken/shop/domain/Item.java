@@ -1,5 +1,7 @@
 package com.ken.shop.domain;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import java.math.BigDecimal;
 /**
  * Created by adeyinkaokuneye on 23/11/2015.
  */
+@Data
 @Entity
 public class Item  implements Serializable {
 
@@ -22,7 +25,5 @@ public class Item  implements Serializable {
 
     @Column(nullable = false)
     private BigDecimal price;
-
-
-
+    
 }

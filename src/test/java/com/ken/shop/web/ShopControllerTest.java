@@ -45,4 +45,6 @@ public class ShopControllerTest {
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
         assertThat(response.getBody(), equalTo("Greetings from Ken's Shop"));
     }
+
+
 }

@@ -39,6 +39,7 @@ public class Store {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
+    @Getter
     @JsonProperty
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
     private List<Item> items;

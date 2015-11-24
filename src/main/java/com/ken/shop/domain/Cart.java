@@ -2,13 +2,13 @@ package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ken.shop.domain.helper.Currency;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,33 +25,42 @@ public class Cart {
     private String id;
 
     /** Cart owner */
+    @Getter
     @JsonProperty
-    @Column(nullable = false)
+    @JoinColumn(name="guest")
+    @OneToOne
     private Guest guest;
 
+    @Getter
+    @Setter
     @JsonProperty
-    @Column(nullable = false)
-    private List<Item> items;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<CartItem> cartItems;
 
+    @Getter
+    @Setter
     @JsonProperty
     @Column(nullable = false)
     private BigDecimal totalPrice;
 
+    @Getter
+    @Setter
     @JsonProperty
-    @Column(nullable = false)
+    @Column(name = "currency", unique = true)
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     protected Cart() { }
 
-    public Cart(Guest guest, List<Item> items, Currency currency) {
+    public Cart(Guest guest, List<CartItem> cartItems, Currency currency) {
         this.guest = guest;
-        this.items = items;
         this.currency = currency;
+        this.cartItems = cartItems;
 
         this.totalPrice = BigDecimal.ZERO;
-        for (Item item : this.items) {
+        for (CartItem cartItem : this.cartItems) {
             this.totalPrice =
-                    this.totalPrice.add(item.getPrice().multiply(BigDecimal.valueOf(currency.getRate())));
+                    this.totalPrice.add(cartItem.getItem().getPrice().multiply(BigDecimal.valueOf(currency.getRate())));
         }
     }
 }

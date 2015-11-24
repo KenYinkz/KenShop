@@ -2,17 +2,10 @@ package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ken.shop.domain.helper.Currency;
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-
-import javax.persistence.EnumType;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -33,9 +26,17 @@ public class Store {
     @Column(name = "name", unique = true)
     private String name;
 
-    @JsonProperty(value = "selectedCurrency")
-    @Column(name="currency")
-    @Enumerated(EnumType.ORDINAL)
+    @Getter
+    @JsonProperty(value = "availableCurrencies")
+    @Column(name = "currencies")
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private List<Currency> currencies;
+
+    @Getter
+    @JsonProperty(value = "defaultCurrency")
+    @Column(name = "currency", unique = true)
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     @JsonProperty
@@ -44,9 +45,10 @@ public class Store {
 
     protected Store() { }
 
-    public Store(String name, Currency defaultCurrency){
+    public Store(String name, List<Currency> currencies, Currency currency){
         this.name = name;
-        this.currency = defaultCurrency;
+        this.currencies = currencies;
+        this.currency = currency;
     }
 
 }

@@ -1,5 +1,6 @@
-package com.ken.shop.domain;
+package com.ken.shop.service;
 
+import com.ken.shop.domain.Item;
 import org.springframework.data.repository.CrudRepository;
 
 

@@ -1,6 +1,7 @@
 package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Id;
@@ -31,9 +32,14 @@ public class Item  implements Serializable {
     @Column(nullable = false)
     private String name;
 
+    @Getter
     @JsonProperty
     @Column(nullable = false)
     private BigDecimal price;
+
+    @JsonProperty
+    @Column(nullable = false)
+    private String formattedPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storeId", nullable = false)
@@ -45,5 +51,6 @@ public class Item  implements Serializable {
         this.name = name;
         this.price = price;
         this.store = store;
+        this.formattedPrice = store.getCurrency().getSymbol() + " " + String.valueOf(price);
     }
 }

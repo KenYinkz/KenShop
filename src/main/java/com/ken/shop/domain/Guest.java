@@ -1,6 +1,7 @@
 package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ public class Guest {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "id", unique = true)
     @JsonProperty
+    @Getter
     private String id;
 
     @JsonProperty

@@ -116,19 +116,13 @@ public class ShopController {
 
         try {
 
-            cart.getCartItems().forEach(cartItem -> {
-                cartItem.setCart(cart);
-                cartItemRepository.save(cartItem);
-            });
+            // persost cart items...
+            cartItemRepository.save(cart.getCartItems());
 
             // we need a new cart object. Why? So our constructor can derive the totalPrice
             Cart c = new Cart(cart.getGuest(), cart.getCartItems(), cart.getCurrency());
             cartRepository.save(c);
-            // update...
-//            cart.getCartItems().forEach(cartItem -> {
-//                cartItem.setCart(c);
-//                cartItemRepository.save(cartItem);
-//            });
+
             return new ResponseEntity<>(c, OK);
         } catch (Exception e) {
             // we can do better...by sending the reason API failed!
@@ -156,7 +150,6 @@ public class ShopController {
             items.forEach(item -> {
                 item.setStore(store);
                 CartItem cartItem = new CartItem();
-                cartItem.setCart(cart);
                 cartItem.setItem(item);
                 cartItems.add(cartItem);
             });

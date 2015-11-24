@@ -29,10 +29,4 @@ public class CartItem {
     @OneToOne
     private Item item;
 
-    @Getter
-    @Setter
-    @JsonProperty
-    @JoinColumn(name="cart")
-    @OneToOne
-    private Cart cart;
 }

@@ -1,6 +1,8 @@
 package com.ken.shop;
 
+import com.ken.shop.domain.Guest;
 import com.ken.shop.domain.Item;
+import com.ken.shop.service.GuestRepository;
 import com.ken.shop.service.ItemRepository;
 import com.ken.shop.domain.Store;
 import com.ken.shop.service.StoreRepository;
@@ -27,11 +29,11 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner setupItems(ItemRepository itemRepository, StoreRepository storeRepository) {
+    public CommandLineRunner setupItems(ItemRepository itemRepository, StoreRepository storeRepository, GuestRepository guestRepository) {
         return (args) -> {
 
             // lets go ahead and create a guest to be used later to add to cart...
-
+            guestRepository.save(new Guest("James Bond"));
 
             // create a store
             List<Currency> currencies = new ArrayList<>();
@@ -42,15 +44,8 @@ public class Application {
             storeRepository.save(store);
 
             // items for the store...
-            itemRepository.save(new Item(" MacBook Pro - Apple", BigDecimal.valueOf(1000.0), store));
+            itemRepository.save(new Item(" MacBook Pro - Apple", BigDecimal.valueOf(1500.0), store));
             itemRepository.save(new Item(" Windows Surface", BigDecimal.valueOf(1200.0), store));
-
-            // fetch all items
-            log.info("Items found with findAll():");
-            log.info("-------------------------------");
-            for (Item item : itemRepository.findAll()) {
-                log.info(item.toString());
-            }
 
         };
     }

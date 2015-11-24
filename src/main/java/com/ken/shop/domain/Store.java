@@ -1,24 +1,26 @@
 package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ken.shop.domain.helper.Currency;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by adeyinkaokuneye on 23/11/2015.
  */
 @Entity
-public class Item  implements Serializable {
+public class Store {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -28,22 +30,23 @@ public class Item  implements Serializable {
     private String id;
 
     @JsonProperty
-    @Column(nullable = false)
+    @Column(name = "name", unique = true)
     private String name;
 
+    @JsonProperty(value = "selectedCurrency")
+    @Column(name="currency")
+    @Enumerated(EnumType.ORDINAL)
+    private Currency currency;
+
     @JsonProperty
-    @Column(nullable = false)
-    private BigDecimal price;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
+    private List<Item> items;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "storeId", nullable = false)
-    private Store store;
+    protected Store() { }
 
-    protected Item () { }
-
-    public Item(String name, BigDecimal price, Store store) {
+    public Store(String name, Currency defaultCurrency){
         this.name = name;
-        this.price = price;
-        this.store = store;
+        this.currency = defaultCurrency;
     }
+
 }

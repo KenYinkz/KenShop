@@ -22,6 +22,10 @@ public class WebConfiguration {
         return registrationBean;
     }
 
+    /**
+     * Add caching abilities...set cache manager
+     * @return
+     */
     @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager("items", "guests", "store");

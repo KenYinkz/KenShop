@@ -1,8 +1,6 @@
 package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Id;
@@ -28,14 +26,12 @@ public class Item  implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "id", unique = true)
     @JsonProperty
-    @Getter
     private String id;
 
     @JsonProperty
     @Column(nullable = false)
     private String name;
 
-    @Getter
     @JsonProperty
     @Column(nullable = false)
     private BigDecimal price;
@@ -44,7 +40,6 @@ public class Item  implements Serializable {
     @Column(nullable = false)
     private String formattedPrice;
 
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storeId", nullable = false)
     private Store store;
@@ -56,5 +51,41 @@ public class Item  implements Serializable {
         this.price = price;
         this.store = store;
         this.formattedPrice = store.getCurrency().getSymbol() + " " + String.valueOf(price);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getFormattedPrice() {
+        return formattedPrice;
+    }
+
+    public void setFormattedPrice(String formattedPrice) {
+        this.formattedPrice = formattedPrice;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

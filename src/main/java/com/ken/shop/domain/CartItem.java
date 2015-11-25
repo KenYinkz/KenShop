@@ -1,8 +1,6 @@
 package com.ken.shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,14 +17,23 @@ public class CartItem {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "id", unique = true)
     @JsonProperty
-    @Getter
     private String id;
 
-    @Getter
-    @Setter
     @JsonProperty
     @JoinColumn(name="item")
     @OneToOne
     private Item item;
 
+    public String getId() {
+        return id;
+    }
+
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 }

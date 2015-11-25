@@ -36,7 +36,7 @@ public class ShopControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        this.base = new URL("http://localhost:8080/");
+        this.base = new URL("http://localhost:"+port+"/");
         template = new TestRestTemplate();
     }
 

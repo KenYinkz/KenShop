@@ -24,6 +24,11 @@ public class CartItem {
     @OneToOne
     private Item item;
 
+    @JsonProperty
+    @Column(name="quantity")
+    private int quantity = 1;
+
+
     public String getId() {
         return id;
     }
@@ -35,5 +40,13 @@ public class CartItem {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -147,8 +147,14 @@ public class ShopController {
             if (cart == null) {// fail fast
                 return new ResponseEntity<>(" No Cart found using the id provided", NOT_FOUND);
             }
+
             // use Item object from store
             Store store = storeRepository.findByName("KenShop");
+            // also find out if item is already present
+            cart.getCartItems().forEach(cartItem -> {
+
+            });
+
             List<CartItem> cartItems = new ArrayList<>();
             items.forEach(item -> {
                 item.setStore(store);
